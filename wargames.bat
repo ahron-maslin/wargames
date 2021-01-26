@@ -5,16 +5,14 @@ cls
 
 set game=""
 set port=0
-rem todo...
-rem check IF number 
 
-echo    B for Bandit
+echo    b for Bandit
 echo ___________________
-echo    L for Leviathan
+echo    l for Leviathan
 echo ___________________
-echo    K for Krypton
+echo    k for Krypton
 echo ___________________
-echo    N for Narnia
+echo    n for Narnia
 echo ___________________
 echo.
 
@@ -25,16 +23,16 @@ rem enter game name and branches port
 echo.
 set /p challenge=Enter challenge letter:
 if %challenge%==b (
-    set game=Bandit
+    set game=bandit
     set port=2220
 ) else if %challenge%==l (
-    set game=Leviathan
+    set game=leviathan
     set port=2223
 ) else if %challenge%==k (
-    set game=Krypton
+    set game=krypton
     set port=2231
 ) else if %challenge%==n (
-    set game=Narnia
+    set game=narnia
     set port=2226
 ) else (
     echo Not a challenge!
@@ -56,22 +54,23 @@ goto savelvl
 
 :makefile
 rem if savefile doesn't exist, create it with the following template
-echo Bandit> save.txt
-echo Leviathan>> save.txt
-echo Krypton>> save.txt
-echo Narnia>> save.txt 
+echo last level is: for bandit> save.txt
+echo last level is: for leviathan>> save.txt
+echo last level is: for krypton>> save.txt
+echo last level is: for narnia>> save.txt 
+type save.txt	
 goto main
 
 :savelvl
 rem save the specified level on current game
 Set infile=save.txt
-Set replace=%game% last level is: %number%
+rem get number by parsing string - save to var
+Set replace=last level is: %number% for %game%
 for /F "tokens=* delims=," %%n in (!infile!) do (
 set LINE=%%n
-set TMPR=!LINE:%game%=%replace%!
-Echo !TMPR!>>tmp.txt
+set TMPR=!LINE:*%game%=%replace%!
+echo !TMPR!>>tmp.txt
 )
 del %infile%
 ren tmp.txt %infile%
 GOTO main
-
