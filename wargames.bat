@@ -1,21 +1,21 @@
 @echo off
-setlocal enableextensions enabledelayedexpansion
-:start
-cls
-
-set game=""
-set port=0
-
-echo    b for Bandit
-echo ___________________
-echo    l for Leviathan
-echo ___________________
-echo    k for Krypton
-echo ___________________
-echo    n for Narnia
-echo ___________________
+echo Usage: 
+echo.
+echo   Enter b for Bandit
+echo _______________________
+echo   Enter l for Leviathan
+echo _______________________
+echo   Enter k for Krypton
+echo _______________________
+echo   Enter n for Narnia
+echo _______________________
 echo.
 
+
+:start
+setlocal enableextensions enabledelayedexpansion
+set game=""
+set port=0
 IF exist save.txt (type save.txt) ELSE GOTO makefile
 
 :main
@@ -50,25 +50,25 @@ if %errorlevel% equ 0 (
     goto level
 )
 
-goto savelvl
+call :savelvl %game% %number%
 
 :makefile
 rem if savefile doesn't exist, create it with the following template
-echo last level is: for bandit> save.txt
-echo last level is: for leviathan>> save.txt
-echo last level is: for krypton>> save.txt
-echo last level is: for narnia>> save.txt 
+echo last level is: for Bandit> save.txt
+echo last level is: for Leviathan>> save.txt
+echo last level is: for Krypton>> save.txt
+echo last level is: for Narnia>> save.txt 
 type save.txt	
 goto main
 
-:savelvl
+:savelvl %1 %2
 rem save the specified level on current game
 Set infile=save.txt
 rem get number by parsing string - save to var
-Set replace=last level is: %number% for %game%
+Set replace=last level is: %2 for %1
 for /F "tokens=* delims=," %%n in (!infile!) do (
 set LINE=%%n
-set TMPR=!LINE:*%game%=%replace%!
+set TMPR=!LINE:*%1=%replace%!
 echo !TMPR!>>tmp.txt
 )
 del %infile%
