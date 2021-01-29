@@ -42,7 +42,7 @@ if %challenge%==b (
 rem ssh into level with selected game and specified port
 set /p number=Enter level number: 
 rem test if input is a number
-echo %number%| findstr /r "^[1-9][0-9]*$">nul
+echo %number%| findstr /r "^[0-9][0-9]*$">nul
 if %errorlevel% equ 0 (
     ssh %game%%number%@%game%.labs.overthewire.org -p %port%
 ) else (
