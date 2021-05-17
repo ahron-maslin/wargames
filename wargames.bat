@@ -19,7 +19,7 @@ set port=0
 IF exist save.txt (type save.txt) ELSE GOTO makefile
 
 :main
-rem enter game name and branches port
+rem enter game name and ssh port
 echo.
 set /p challenge=Enter challenge letter:
 if %challenge%==b (
@@ -73,4 +73,4 @@ echo !TMPR!>>tmp.txt
 )
 del %infile%
 ren tmp.txt %infile%
-GOTO main
+GOTO level
